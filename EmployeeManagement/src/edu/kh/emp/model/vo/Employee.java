@@ -11,6 +11,11 @@ public class Employee {
 	private String jobName; 		// 직급명
 	private int salary; 			// 급여
 	
+	private String jobCode;			// 부서코드
+	private String deptCode;		// 직급코드
+	private String salLevel;		// 급여등급
+	private double bonus;			// 보너스
+	private int managerId;			// 사수번호
 	// 기본 생성자
 	public Employee() {}
 
@@ -25,6 +30,16 @@ public class Employee {
 		this.departmentTitle = departmentTitle;
 		this.jobName = jobName;
 		this.salary = salary;
+	}
+	
+	public Employee(int empId, String empName, String empNo, String email, String phone, String departmentTitle,
+			String jobName, int salary, String jobCode, String deptCode, String salLevel, double bonus, int managerId) {
+		this(empId, empName, empNo, email, phone, departmentTitle, jobName, salary);
+		this.jobCode = jobCode;
+		this.deptCode = deptCode;
+		this.salLevel = salLevel;
+		this.bonus = bonus;
+		this.managerId = managerId;
 	}
 
 	public int getEmpId() {
@@ -81,5 +96,48 @@ public class Employee {
 	}
 	public void setSalary(int salary) {
 		this.salary = salary;
+	}
+
+	public String getJobCode() {
+		return jobCode;
+	}
+	public void setJobCode(String jobCode) {
+		this.jobCode = jobCode;
+	}
+
+	public String getDeptCode() {
+		return deptCode;
+	}
+	public void setDeptCode(String deptCode) {
+		this.deptCode = deptCode;
+	}
+
+	public String getSalLevel() {
+		return salLevel;
+	}
+	public void setSalLevel(String salLevel) {
+		this.salLevel = salLevel;
+	}
+
+	public double getBonus() {
+		return bonus;
+	}
+	public void setBonus(double bonus) {
+		this.bonus = bonus;
+	}
+
+	public int getManagerId() {
+		return managerId;
+	}
+	public void setManagerId(int managerId) {
+		this.managerId = managerId;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [empId=" + empId + ", empName=" + empName + ", empNo=" + empNo + ", email=" + email
+				+ ", phone=" + phone + ", departmentTitle=" + departmentTitle + ", jobName=" + jobName + ", salary="
+				+ salary + ", jobCode=" + jobCode + ", deptCode=" + deptCode + ", salLevel=" + salLevel + ", bonus="
+				+ bonus + ", managerId=" + managerId + "]";
 	}
 }
