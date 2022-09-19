@@ -76,4 +76,28 @@ public class TestDAO {
 		// 7. SQL 수행 결과 반환
 		return result;
 	}
+
+	/** 입력 받은 번호의 제목, 내용 수정 DAO
+	 * @param conn
+	 * @param testNo
+	 * @param updateTitle
+	 * @param updateContent
+	 * @return SQL 수행 후 수정된 행의 갯수
+	 * @throws SQLException
+	 */
+	public int update(Connection conn, int testNo, String updateTitle, String updateContent) throws SQLException{
+		String SQL = prop.getProperty("update");	// SQL 가져옴
+		int result = 0;								// 반환 결과
+		try {
+			pstmt = conn.prepareStatement(SQL);		// PreparedStatement 생성
+			pstmt.setString(1, updateTitle);		
+			pstmt.setString(2, updateContent);
+			pstmt.setInt(3, testNo);				// pstmt 세팅
+			
+			result = pstmt.executeUpdate();			// SQL 수행 후 실행 결과 반환
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }

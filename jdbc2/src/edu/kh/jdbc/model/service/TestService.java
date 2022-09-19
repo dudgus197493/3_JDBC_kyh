@@ -97,4 +97,22 @@ public class TestService {
 		}
 		return res;
 	}
+
+	/** 입력 받은 번호의 제목, 내용 수정 서비스
+	 * @param testNo
+	 * @param updateTitle
+	 * @param updateContent
+	 * @return update 수행 후 변경된 행 갯수
+	 */
+	public int update(int testNo, String updateTitle, String updateContent) throws Exception{
+		Connection conn = getConnection();
+		int result = 0;
+		
+		result = dao.update(conn, testNo, updateTitle, updateContent);	// dao 호출
+		
+		if(result > 0) commit(conn);		// update 성공 시 commit						
+		else 		   rollback(conn);		// update 실패 시 rollback
+		
+		return result;
+	}
 }
