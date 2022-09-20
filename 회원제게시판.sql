@@ -86,6 +86,41 @@ WHERE MEMBER_ID = 'user01'
 AND MEMBER_PW = 'pass01'
 AND SECESSION_FL = 'N';
 
+-- 회원 목록 조회(아이디, 이름, 성별)
+-- 탈퇴 회원 미포함
+-- 가입일 내림차순
+	--> MEMBER_NO 내림차순(나중에 가입한 회원의 번호가 더 큼)
+SELECT MEMBER_ID, MEMBER_NM, MEMBER_GENDER
+FROM MEMBER
+WHERE SECESSION_FL = 'N'
+ORDER BY MEMBER_NO DESC;
+-- ORDER BY ENROLL_DATE DESC; --> 날짜 타입은 비교하는데 비용을 많이 씀
 
+-- 회원 수정 (이름, 성별)
+UPDATE "MEMBER" SET
+MEMBER_NM = '바꾼이름',	-- 입력
+MEMBER_GENDER = 'F'		-- 입력
+WHERE MEMBER_NO = 1;	-- loginMember.getMemberNo();
+SELECT * FROM MEMBER;
+
+ROLLBACK;
+
+-- 비밀변호 변경(현재 비밀번호 -> 새 비밀번호)
+UPDATE MEMBER SET
+MEMBER_PW = ?
+WHERE MEMBER_NO = ?
+AND MEMBER_PW = ?
+
+-- 회원 탈퇴(SECSSION_FL 컬럼의 값을 'Y'로 변경)
+UPDATE "MEMBER" SET
+SECESSION_FL = 'Y'
+WHERE MEEMBER_NO = ?
+AND PASSWORD_PW = ?;
+
+-- 비밀번호 인증
+SELECT COUNT(*) "CHECK"
+FROM "MEMBER"
+WHERE MEMBER_NO = 2
+AND MEMBER_PW = 'pass02';
 
 
