@@ -3,6 +3,7 @@ package edu.kh.jdbc.main.view;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import edu.kh.jdbc.board.view.BoardView;
 import edu.kh.jdbc.main.model.service.MainService;
 import edu.kh.jdbc.member.view.MemberView;
 import edu.kh.jdbc.member.vo.Member;
@@ -28,7 +29,7 @@ import edu.kh.jdbc.member.vo.Member;
  *    (게시글 번호, 제목, 내용, 작성자명, 작성일, 조회수, 
  *     댓글 목록(작성일 오름차순 )
  *     
- *     
+ *     // 자신이 작성한 글 일때만 메뉴 노출
  *     2-1. 게시글 수정 (자신의 게시글만)
  *     2-2. 게시글 삭제 (자신의 게시글만)
  *     
@@ -53,6 +54,11 @@ public class MainView {
 	
 	// 회원 기능 메뉴 객체 생성
 	private MemberView memberView = new MemberView();
+	
+	// 게시판 기능 메뉴 객체 생성
+	private BoardView boardView = new BoardView();
+	
+	
 	/**
 	 * 메인 메뉴 출력 메서드
 	 */
@@ -66,6 +72,7 @@ public class MainView {
 					System.out.println("\n***** 회원제 게시판 프로그램 *****\n");
 					System.out.println("1. 로그인");
 					System.out.println("2. 회원 가입");
+					System.out.println("3. 비밀번호 찾기");
 					System.out.println("0. 프로그램 종료");
 					
 					System.out.print("\n메뉴 선택 : ");
@@ -76,6 +83,7 @@ public class MainView {
 					switch(input) {
 					case 1: login(); break;		// 로그인
 					case 2: signUp(); break;	// 회원 가입
+					case 3: findPw(); break;	// 비밀번호 찾기
 					case 0: System.out.println("프로그램 종료"); break;
 					default : System.out.println("메뉴에 작성된 번호만 입력해주세요.");
 					}
@@ -92,7 +100,7 @@ public class MainView {
 					
 					switch(input) {
 					case 1: memberView.memberMenu(loginMember); break;	// 회원 기능 서브 메뉴 출력
-					case 2: break;
+					case 2: boardView.boardMenu(); break; // 회원 정보 필요 시 static에서 가져와 사용
 					case 0:	// 로그 아웃 == loginMember가 참조하는 객체 없음(== null)
 							// 로그인 == loginMember가 참조하는 객체 존재
 						loginMember = null;
@@ -235,6 +243,30 @@ public class MainView {
 			System.out.println();
 		}catch(Exception e) {
 			System.out.println("\n<<회원 가입 중 예외 발생>>");
+			e.printStackTrace();
+		}
+	}
+	
+	private void findPw() {
+		System.out.println("\n[비밀번호 찾기]\n");
+		
+		
+		try {
+			System.out.print("아이디 : ");
+			String userId = sc.next();
+			
+			System.out.print("이름 : ");
+			String userName = sc.next();
+			
+			String userPw = service.findPw(userId, userName);	
+			
+			if(userPw == null) { 
+				System.out.println("\n[개인 정보가 일치하지 않습니다.]\n");
+			} else {
+				System.out.printf("\n[%s님의 비밀번호 => %s]\n", userId, userPw);
+			}
+		}catch(Exception e) {
+			System.out.println("\n<< 비밀번호 찾기 중 예외 발생>>\n");
 			e.printStackTrace();
 		}
 	}

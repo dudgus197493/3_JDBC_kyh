@@ -200,7 +200,7 @@ public class MemberView {
 			String currentPw = null;
 			// 비밀번호 입력 (while, true)
 			while(true) {
-				System.out.print("비밀번호 입력 (이전화면 [0] ) : ");
+				System.out.print("비밀번호 인증 (이전화면 [0] ) : ");
 				currentPw = sc.next();
 				if(currentPw.equals("0")) return;
 				

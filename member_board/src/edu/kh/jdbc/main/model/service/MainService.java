@@ -65,5 +65,15 @@ public class MainService {
 		// 4. 조회 결과 반환
 		return loginMember;
 	}
+
+	public String findPw(String userId, String userName) throws Exception{
+		Connection conn = getConnection();
+		
+		String userPw = dao.findPw(conn, userId, userName);
+		
+		close(conn);
+		
+		return userPw;
+	}
 	
 }
