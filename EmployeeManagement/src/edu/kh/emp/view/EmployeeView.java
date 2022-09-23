@@ -33,6 +33,7 @@ public class EmployeeView {
 				System.out.println("8. 부서별 급여 합 전체 조회");
 				System.out.println("9. 주민등록번호가 일치하는 사원 정보 조회");
 				System.out.println("10. 직급별 급여 평균 조회");
+				System.out.println("11. 테스트 메뉴");
 				System.out.println("0. 프로그램 종료");
 				
 				System.out.print("메뉴 선택 >> ");
@@ -51,6 +52,7 @@ public class EmployeeView {
 				case 8: selectDeptTotalSalary(); break;
 				case 9: selectEmpNo(); break;
 				case 10: selectJobAvgSalary(); break;
+				case 11: test(); break;
 				case 0: System.out.println("프로그램을 종료합니다..."); break;
 				default : System.out.println("메뉴에 존재하는 번호만 입력하세요.");
 				}
@@ -324,4 +326,15 @@ public class EmployeeView {
 					emp.getPhone(), emp.getDepartmentTitle(), emp.getJobName(), emp.getSalary());
 		}
 	}
+	
+	public void test() {
+		List<Employee> empList = dao.test();
+		
+		if(empList.isEmpty()) {
+			System.out.println("조회결과 없음");
+		} else {
+			printAll(empList);
+		}
+	}
+	
 }

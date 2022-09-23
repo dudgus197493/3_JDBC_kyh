@@ -528,5 +528,94 @@ public class EmployeeDAO {
 		}
 		return avgSalHash;
 	}
+
+	public List<Employee> test() {
+		List<Employee> empList = new ArrayList<>();
+		String[] nameArr = {"대북혼", "송종기", "임시환", "노옹철", "유재식", "정중하"};
+		
+		try {
+			Class.forName(driver);
+			conn = DriverManager.getConnection(url, user, pw);
+			
+			for(int i = 0; i<nameArr.length; i++) {
+				String sql = "SELECT EMP_NAME FROM (\r\n"
+						+ "	SELECT EMP_NAME\r\n"
+						+ "	FROM EMPLOYEE\r\n"
+						+ "	ORDER BY dbms_random.value)\r\n"
+						+ "WHERE rownum <= 4 AND NOT EMP_NAME = ?\r\n"
+						+ "UNION ALL\r\n"
+						+ "SELECT EMP_NAME FROM EMPLOYEE WHERE EMP_NAME = ?";
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, nameArr[i]);
+				pstmt.setString(2, nameArr[i]);
+				rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					Employee emp = new Employee();
+					
+//					emp.setEmpId(rs.getInt("EMP_ID"));
+					emp.setEmpName(rs.getString("EMP_NAME"));
+//					emp.setEmpNo(rs.getString("EMP_NO"));
+//					emp.setEmail(rs.getString("EMAIL"));
+					empList.add(emp);
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rs != null) rs.close();
+				if(pstmt != null) pstmt.close();
+				if(conn != null) conn.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return empList;
+	}
+	
+//	public List<Employee> test() {
+//		List<Employee> empList = new ArrayList<>();
+//		String[] nameArr = {"대북혼", "송종기", "임시환", "노옹철", "유재식", "정중하"};
+//		
+//		try {
+//			Class.forName(driver);
+//			conn = DriverManager.getConnection(url, user, pw);
+//			
+//			String sql = "";
+//			stmt = conn.createStatement();
+//			for(int i = 0; i<nameArr.length; i++) {
+//				if(i == 0) {
+//					sql += "SELECT * FROM EMPLOYEE WHERE EMP_NAME = '"+nameArr[i]+"'";
+//				} else {
+//					sql += " UNION SELECT * FROM EMPLOYEE WHERE EMP_NAME = '"+nameArr[i]+"'";
+//				}
+//			}
+//			
+//			rs = stmt.executeQuery(sql);
+//			
+//			while(rs.next()) {
+//				Employee emp = new Employee();
+//				
+//				emp.setEmpId(rs.getInt("EMP_ID"));
+//				emp.setEmpName(rs.getString("EMP_NAME"));
+//				emp.setEmpNo(rs.getString("EMP_NO"));
+//				emp.setEmail(rs.getString("EMAIL"));
+//				empList.add(emp);
+//			}
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if(rs != null) rs.close();
+//				if(stmt != null) stmt.close();
+//				if(conn != null) conn.close();
+//			}catch(SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		return empList;
+//	}
+
 }
  

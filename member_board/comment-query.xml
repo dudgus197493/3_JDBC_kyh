@@ -13,4 +13,24 @@
 		AND BOARD_NO = ?
 		ORDER BY COMMENT_NO
 	</entry>
+	
+	<!-- 게시글 댓글 등록 -->
+	<entry key="insertComment">
+		INSERT INTO "COMMENT" (COMMENT_NO, COMMENT_CONTENT, MEMBER_NO, BOARD_NO)
+		VALUES (SEQ_COMMENT_NO.NEXTVAL, ?, ?, ?)
+	</entry>
+	
+	<!-- 게시글 댓글 수정 -->
+	<entry key="updateComment">
+		UPDATE "COMMENT" SET
+		COMMENT_CONTENT = ?
+		WHERE COMMENT_NO = ?
+	</entry>
+	
+	<!-- 게시글 댓글 삭제 -->
+	<entry key="deleteComment">
+		UPDATE "COMMENT" SET
+		DELETE_FL = 'Y'
+		WHERE COMMENT_NO = ?
+	</entry>
 </properties>
